@@ -8,7 +8,7 @@ var finished = false;
 var maxColorNumber;
 var colors = ['blue','cyan','gold','green','magenta','orange','red', 'white'];
 var targetColor;
-var gameSound="GameSound.mp3";
+
 
 
 function doGame(){
@@ -19,6 +19,8 @@ function doGame(){
 		var randomNumber = Math.random() * maxColorNumber; //Multiply a random number for the color array lenght
 		var randomNumberInt= Math.floor(randomNumber);
 		targetColor = colors[randomNumberInt];
+
+		alert("The Targe Color is :"+targetColor);
 
 		while(!finished){
 			//Asking for player input
@@ -41,60 +43,47 @@ function doGame(){
 function checkGuess(){
 	console.log("checkGuess working")
 
-	//Return wrong answear
-	if(playerInputText!==targetColor){
+	
+	if(colors.indexOf(playerInputText)==-1){
+		alert("The color must be on the list below: \n\n"+
+				colors+
+				"\n\n"+
+				" Try again!");
+			return false;
 
-		//Check if the playerInputText is valid
-		var validColor = false;
-
-		for(i=0;i<=maxColorNumber-1;i++){
+	}
 		
-			if(playerInputText === colors[i]){
-				validColor = true;
 
-			}
-		}
-
-		//playerInputText is valid
-		if(validColor){
+		//Check if its the right answear or give a clue
+	else{
 
 				//Determine if player guess is alphabetical higher than target color
 				if(playerInputText > targetColor){
 					alert("Your color is Higher. Try again!");
 					return false;
-				}
+		}
 
 			//Determine if player guess is alphabetical lower than target color
-				if(playerInputText< targetColor){
+				else if(playerInputText< targetColor){
 					alert("Your color is Lowe. Try again!");
 					return false;
 				}
-		}
+		
 
-		//playerInputText isn't valid
-		else{
-			alert("The color must be on the list below: \n\n"+
-				colors+
-				"\n\n"+
-				" Try again!");
-			return false;
-		}
-			
+				//Return right answear
+				else{
+						document.body.style.backgroundColor = targetColor;
+
+						alert("You got it! The color was: \n\n"+
+						targetColor+
+						"\n\n It took you "+playerGuesses+
+						" guesses to get the color");
+
+						return true;
+				}	
 	}
 
-
-	//Return right answear
-	if(playerInputText===targetColor){
-
-			document.body.style.backgroundColor = targetColor;
-
-			alert("You got it! The color was: \n\n"+
-				targetColor+
-				"\n\n It took you "+playerGuesses+
-				" guesses to get the color");
-
-			return true;
-	}
+	
 
 }
 
